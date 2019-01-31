@@ -6,8 +6,8 @@ from collections import defaultdict
 import numpy as np
 import matplotlib.pyplot as plt
 
-#モデルの読み込み
-m = Doc2Vec.load("./model/JAM_model.model")
+#モデルの読み込み(読み込むmodelのパスを指定)
+m = Doc2Vec.load("/path/to/model")
 
 #モデルデータの各ベクトル、それに対応する曲名をリストに格納
 vectors_li = []
