@@ -57,7 +57,7 @@ def prepare_data(fname):
 
 def create_doc2vec_model():
     model = Doc2Vec(documents=traning_docs,min_cnt=1,dm=1,vector_size=100,window=8,sample=1e-6)
-    model.save("./model/JAM_model.model")
+    model.save("/path/to/model")                            # 保存する名前を指定
     #model = Doc2Vec(documents=traning_docs,min_cnt=1,dm=1)  #類似TOP3ほぼ99.9%の一致率
     return model
 
@@ -71,5 +71,5 @@ if __name__ == '__main__':
 
     for t in title:
         print(t+": ")
-        print(m.docvecs.most_similar(t,topn=1))
+        print(m.docvecs.most_similar(t,topn=1))             # それぞれの歌詞に一番近しい曲のタイトルを表示
     #print(model.docvecs.similarity(1,1))   確認用
