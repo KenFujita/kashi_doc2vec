@@ -43,8 +43,8 @@ def prepare_data(fname):
     kyoku_li = []                       # 曲リスト
     kyoku_name = []                     # 曲のタイトルリスト
     kashi_list = []                     # 全曲の歌詞リスト
-    with open(fname,"r") as f:
-        text_list = f.readlines()
+    with open(fname,"r") as f:          
+        text_list = f.readlines()       # テキストデータの中身は「title,lyrics」が1行につき1曲分書き込まれている
 
     for text in text_list:
         kyoku_li.append(text.split(","))
