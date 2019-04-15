@@ -31,6 +31,7 @@ def create_countvectorizer_from_texts(name,kashi):
 def parse_by_mecab(k_name,docs):
     for i,kashi in enumerate(docs):
         keitaiso = []
+        kashi = re.sub('[!-/:-@[-`{-~]','',kashi)   # 半角記号を取り除く
         result = tagger.parseToNode(kashi)
         while result:
             #print("feature: {}, surface: {}".format(result.feature,result.surface))
@@ -56,7 +57,12 @@ def prepare_data(fname):
     return [kyoku_name,kashi_list]
 
 def create_doc2vec_model():
-    model = Doc2Vec(documents=traning_docs,min_cnt=1,dm=1,vector_size=100,window=8,sample=1e-6)
+    # 正直パラメータについてはサンプルを見て設定してうまくいった
+    # URL: https://deepage.net/machine_learning/2017/01/08/doc2vec.html
+    # しっかり勉強しないとうまく調整はできない
+    model = Doc2Vec(min_cnt=1,dm=1,vector_size=300,window=15,alpha=.045,min_alpha=.0001,sample=1e-5,epochs=500)
+    model.build_vocab(traning_docs)
+    model.train(traning_docs,total_examples=model.corpus_count,epochs=model.epochs)
     model.save("/path/to/model")                            # 保存する名前を指定
     #model = Doc2Vec(documents=traning_docs,min_cnt=1,dm=1)  #類似TOP3ほぼ99.9%の一致率
     return model
